@@ -10,7 +10,7 @@ ECHO 3.Download Latest Build
 ECHO 4.To exit
 ECHO.
 
-CHOICE /C 12345 /M "Enter your choice:"
+CHOICE /C 1234 /M "Enter your choice:"
 
 :: Note - list ERRORLEVELS in decreasing order
 IF ERRORLEVEL 4 GOTO exit
