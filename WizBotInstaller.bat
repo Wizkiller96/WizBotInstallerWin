@@ -5,7 +5,7 @@ CD /D %root%
 
 CLS
 ECHO 1.Download Latest Build
-ECHO 2.Download Stable Build (Not Used)
+ECHO 2.Download Stable Build
 ECHO 3.Run WizBot (normally)
 ECHO 4.Run WizBot with Auto Restart (check "if" WizBot is working properly, before using this)
 ECHO 5.To exit
