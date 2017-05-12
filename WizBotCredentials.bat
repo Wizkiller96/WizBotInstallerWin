@@ -40,7 +40,7 @@ set /p token=Please enter your Bot Token ~59 characters long(it is not the Clien
 cls
 set /p owner=Please enter your Owner ID:
 cls
-set /p googleapi=Please enter your Goggle API key (Optional!! You can skip this step pressing Enter key): 
+set /p googleapi=Please enter your Google API key (Optional!! You can skip this step pressing Enter key): 
 cls
 set /p lolapi=Please enter your LoLApiKey (Optional!! You can skip this step pressing Enter key): 
 cls
