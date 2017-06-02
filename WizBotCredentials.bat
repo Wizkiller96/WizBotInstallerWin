@@ -27,6 +27,8 @@ IF EXIST "%root%WizBot\src\WizBot\credentials.json.backup2" rename "%root%WizBot
 IF EXIST "%root%WizBot\src\WizBot\credentials.json.backup" rename "%root%WizBot\src\WizBot\credentials.json.backup" "credentials.json.backup2"
 rename "%root%WizBot\src\WizBot\credentials.json" "credentials.json.backup"
 echo.
+echo Back up complete...
+echo.
 pause
 GOTO create
 
