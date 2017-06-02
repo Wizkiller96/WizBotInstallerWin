@@ -17,3 +17,4 @@ IF EXIST "%root%WizBotAutoRun.bat" del "%root%WizBotAutoRun.bat"
 IF EXIST "%root%WizBotRun.bat" del "%root%WizBotRun.bat"
 IF EXIST "%root%Stable.bat" del "%root%Stable.bat"
 IF EXIST "%root%Latest.bat" del "%root%Latest.bat"
+pause
