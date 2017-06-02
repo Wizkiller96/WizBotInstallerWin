@@ -8,6 +8,7 @@ SET "build5=%root%WizBotInstall_Temp\WizBot\src\WizBot\"
 SET "installtemp=%root%WizBotInstall_Temp\"
 ::Deleting traces of last setup for the sake of clean folders, if by some miracle it still exists
 IF EXIST "%installtemp%" ( RMDIR "%installtemp%" /S /Q >nul 2>&1)
+echo.
 timeout /t 5
 ::Checks that both git and dotnet are installed
 dotnet --version >nul 2>&1 || GOTO :dotnet

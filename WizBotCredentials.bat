@@ -7,13 +7,17 @@ IF EXIST "%root%WizBot\src\WizBot" (GOTO installed) ELSE (GOTO notinstalled)
 
 :notinstalled
 title Failed Creating WizBot credentials.json
+echo.
 echo You don't have WizBot installed. Please Install WizBot (latest or stable) build before trying again!
+echo.
 pause
 del WizBotCredentials.bat
 
 :installed
 title Creating WizBot credentials.json
+echo.
 echo Please make sure you have all the required informations to setup the credentials.json before continuing...
+echo.
 echo Refer to the hosting documents for more info...
 echo.
 pause

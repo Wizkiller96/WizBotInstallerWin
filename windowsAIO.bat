@@ -32,7 +32,7 @@ timeout /t 10
 TITLE Downloading WizBot (Latest), please wait...
 SET "FILENAME=%~dp0\Latest.bat"
 powershell -Command "Invoke-WebRequest https://github.com/Wizkiller96/WizBotInstallerWin/raw/1.4/Latest.bat -OutFile '%FILENAME%'"
-ECHO WizBot Dev Build (latest) downloaded.
+ECHO WizBot Latest build script downloaded.
 timeout /t 5
 CALL Latest.bat
 GOTO End
@@ -43,7 +43,7 @@ timeout /t 10
 TITLE Downloading WizBot (Stable), please wait...
 SET "FILENAME=%~dp0\Stable.bat"
 powershell -Command "Invoke-WebRequest https://github.com/Wizkiller96/WizBotInstallerWin/raw/1.4/Stable.bat -OutFile '%FILENAME%'"
-ECHO WizBot Stable build downloaded.
+ECHO WizBot Stable build script downloaded.
 timeout /t 5
 CALL Stable.bat
 GOTO End
