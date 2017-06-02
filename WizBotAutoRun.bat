@@ -25,11 +25,14 @@ IF ERRORLEVEL 1 GOTO latestar
 :latestar
 ECHO Auto Restart and Update with Dev Build (latest)
 ECHO Bot will auto update on every restart!
+CD /D "%~dp0WizBot"
+dotnet restore
+dotnet build --configuration Release
 CD /D "%~dp0WizBot\src\WizBot"
 dotnet run --configuration Release
 ECHO Updating...
 SET "FILENAME=%~dp0\Latest.bat"
-powershell -Command "Invoke-WebRequest https://github.com/Wizkiller96/WizBot/raw/dev/scripts/Latest.bat -OutFile '%FILENAME%'"
+powershell -Command "Invoke-WebRequest https://github.com/Wizkiller96/WizBotInstallerWin/raw/1.4/Latest.bat -OutFile '%FILENAME%'"
 ECHO WizBot Dev Build (latest) downloaded.
 SET "root=%~dp0"
 CD /D "%root%"
@@ -39,11 +42,14 @@ GOTO latestar
 :stablear
 ECHO Auto Restart and Update with Stable Build
 ECHO Bot will auto update on every restart!
+CD /D "%~dp0WizBot"
+dotnet restore
+dotnet build --configuration Release
 CD /D "%~dp0WizBot\src\WizBot"
 dotnet run --configuration Release
 ECHO Updating...
 SET "FILENAME=%~dp0\Stable.bat"
-powershell -Command "Invoke-WebRequest https://github.com/Wizkiller96/WizBot/raw/dev/scripts/Stable.bat -OutFile '%FILENAME%'"
+powershell -Command "Invoke-WebRequest https://github.com/Wizkiller96/WizBotInstallerWin/raw/1.4/Stable.bat -OutFile '%FILENAME%'"
 ECHO WizBot Stable build downloaded.
 SET "root=%~dp0"
 CD /D "%root%"
@@ -54,6 +60,9 @@ GOTO stablear
 ECHO Normal Auto Restart
 ECHO Bot will not auto update on every restart!
 timeout /t 3
+CD /D "%~dp0WizBot"
+dotnet restore
+dotnet build --configuration Release
 CD /D "%~dp0WizBot\src\WizBot"
 dotnet run --configuration Release
 goto autorun
