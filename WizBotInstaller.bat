@@ -1,7 +1,7 @@
 @ECHO OFF
 TITLE WizBot Client!
-SET root=%~dp0
-CD /D %root%
+SET "root=%~dp0"
+CD /D "%root%"
 
 CLS
 ECHO 1.Download Latest Build
@@ -103,7 +103,7 @@ ECHO.
 ECHO DO NOT USE "Windows PowerShell" for ffmpeg Installation!
 ECHO.
 pause
-mkdir %SystemDrive%\ffmpeg\
+mkdir "%SystemDrive%\ffmpeg\"
 SET "FILENAME=%SystemDrive%\ffmpeg\ffmpeg.zip"
 ECHO.
 ECHO Downloading ffmpeg, please wait...
@@ -153,7 +153,7 @@ ECHO.
 ECHO DO NOT USE "Windows PowerShell" for ffmpeg Installation!
 ECHO.
 pause
-mkdir %SystemDrive%\ffmpeg\
+mkdir "%SystemDrive%\ffmpeg\"
 SET "FILENAME=%SystemDrive%\ffmpeg\ffmpeg.zip"
 ECHO.
 ECHO Downloading ffmpeg, please wait...
