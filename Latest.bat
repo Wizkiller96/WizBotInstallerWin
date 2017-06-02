@@ -59,6 +59,9 @@ IF EXIST "%root%WizBot\" (GOTO :backupinstall) ELSE (GOTO :freshinstall)
 	ECHO credentials.json copied...
 	ROBOCOPY "%root%WizBot_Old\src\WizBot\bin" "%installtemp%WizBot\src\WizBot\bin" /E >nul 2>&1
 	IF %ERRORLEVEL% GEQ 8 (GOTO :copyerror)
+    IF EXIST "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" ( COPY "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.1\data\WizBot.db" >nul 2>&1)
+	timeout /t 2
+	IF EXIST "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" ( DEL "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" >nul 2>&1)
 	ECHO.
 	ECHO bin folder copied...
 	RD /S /Q "%root%WizBot_Old\src\WizBot\data\musicdata"
