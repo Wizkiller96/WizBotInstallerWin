@@ -3,6 +3,14 @@
 SET root=%~dp0
 CD /D %root%
 
+call :guide %%%%1 %%%%2 %%%%3 %%%%4 %%%%5 %%%%6 %%%%7 %%%%8 %%%%9
+goto end
+
+:guide
+start https://wizbot.readthedocs.io/en/latest/JSON%20Explanations/
+
+:end
+cls
 IF EXIST "%root%WizBot\src\WizBot" (GOTO installed) ELSE (GOTO notinstalled)
 
 :notinstalled
@@ -40,11 +48,11 @@ GOTO create
 cls
 set /p client=Please enter your Client ID:
 cls
-set /p botid=Please enter your Bot ID (it is same as the client ID for new users):
-cls
 set /p token=Please enter your Bot Token ~59 characters long(it is not the Client Secret, Please make sure you enter the Token and not Client Secret):
 cls
 set /p owner=Please enter your Owner ID:
+cls
+set /p admin=Please enter your Admin ID: (Optional!! You can skip this step pressing Enter key):
 cls
 set /p googleapi=Please enter your Google API key (Optional!! You can skip this step pressing Enter key): 
 cls
@@ -56,22 +64,34 @@ set /p osu=Please enter your OsuApiKey (Optional!! You can skip this step pressi
 cls
 set /p scid=Please enter your SoundCloudClientId (Optional!! You can skip this step pressing Enter key):
 cls
+set /p clvrapi=Please enter your CleverbotApiKey (Optional!! You can skip this step pressing Enter key):
+cls
 (
 echo {
 echo   "ClientId": %client%,
-echo   "BotId": %botid%,
 echo   "Token": "%token%",
 echo   "OwnerIds": [
 echo     %owner%,
+echo   ],
+echo   "AdminIds": [
+echo     %admin%,
 echo   ],
 echo   "LoLApiKey": "%lolapi%",
 echo   "GoogleApiKey": "%googleapi%",
 echo   "MashapeKey": "%mashape%",
 echo   "OsuApiKey": "%osu%",
 echo   "SoundCloudClientId": "%scid%",
+echo   "CleverbotApiKey": "%clvrapi%",
+echo   "TwitchClientId": null,
 echo   "CarbonKey": "",
 echo   "Db": null,
-echo   "TotalShards": 1
+echo   "RestartCommand": {
+echo       "Cmd": "dotnet",
+echo       "Args": "run -c Release"
+echo   },
+echo   "ShardRunCommand": "dotnet",
+echo   "ShardRunArguments": "run -c Release -- {0} {1}",
+echo   "TotalShards": 1,
 echo }
 ) > "%root%WizBot\src\WizBot\credentials.json"
 echo.

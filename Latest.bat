@@ -20,7 +20,7 @@ CD /D "%installtemp%"
 ::Downloads the latest version of WizBot
 ECHO Downloading WizBot...
 ECHO.
-git clone -b 1.4 --recursive --depth 1 --progress https://github.com/Wizkiller96/WizBot.git >nul
+git clone -b 1.9 --recursive --depth 1 https://github.com/Wizkiller96/WizBot >nul
 IF %ERRORLEVEL% EQU 128 (GOTO :giterror)
 TITLE Installing WizBot, please wait...
 ECHO.
@@ -59,14 +59,19 @@ IF EXIST "%root%WizBot\" (GOTO :backupinstall) ELSE (GOTO :freshinstall)
 	ECHO credentials.json copied...
 	ROBOCOPY "%root%WizBot_Old\src\WizBot\bin" "%installtemp%WizBot\src\WizBot\bin" /E >nul 2>&1
 	IF %ERRORLEVEL% GEQ 8 (GOTO :copyerror)
-    IF EXIST "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" ( COPY "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.1\data\WizBot.db" >nul 2>&1)
+	IF EXIST "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" ( COPY "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp2.1\data\WizBot.db" >nul 2>&1)
 	timeout /t 2
-	IF EXIST "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" ( DEL "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" >nul 2>&1)
+	IF EXIST "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.1\data\WizBot.db" ( COPY "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.1\data\WizBot.db" "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp2.1\data\WizBot.db" >nul 2>&1)
+	timeout /t 2
+	IF EXIST "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp2.0\data\WizBot.db" ( COPY "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp2.0\data\WizBot.db" "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp2.1\data\WizBot.db" >nul 2>&1)
+	timeout /t 2
+	IF EXIST "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" ( RENAME "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.0\data\WizBot.db" "WizBot_old.db" >nul 2>&1)
+	ECHO.
+	IF EXIST "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.1\data\WizBot.db" ( RENAME "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp1.1\data\WizBot.db" "WizBot_old.db" >nul 2>&1)
+	ECHO.
+	IF EXIST "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp2.0\data\WizBot.db" ( RENAME "%installtemp%WizBot\src\WizBot\bin\Release\netcoreapp2.0\data\WizBot.db" "WizBot_old.db" >nul 2>&1)
 	ECHO.
 	ECHO bin folder copied...
-	RD /S /Q "%root%WizBot_Old\src\WizBot\data\musicdata"
-	ECHO.
-	ECHO music cache cleared...
 	ROBOCOPY "%root%WizBot_Old\src\WizBot\data" "%installtemp%WizBot\src\WizBot\data" /E >nul 2>&1
 	IF %ERRORLEVEL% GEQ 8 (GOTO :copyerror)
 	ECHO.
@@ -117,29 +122,31 @@ ECHO Your System Architecture is 32bit...
 timeout /t 5
 ECHO.
 ECHO Getting 32bit libsodium.dll and opus.dll...
-IF EXIST "%root%WizBot\src\WizBot\_libs\32\libsodium.dll" (GOTO copysodium) ELSE (GOTO downloadsodium)
+IF EXIST "%root%\WizBot\WizBot.Core\_libs\32\libsodium.dll" (GOTO copysodium) ELSE (GOTO downloadsodium)
 :copysodium
-del "%root%WizBot\src\WizBot\libsodium.dll"
-copy "%root%WizBot\src\WizBot\_libs\32\libsodium.dll" "%root%WizBot\src\WizBot\libsodium.dll"
-ECHO libsodium.dll copied.
+del "%root%\WizBot\src\WizBot\libsodium.dll"
+IF EXIST "%root%\WizBot\src\WizBot\libsodium.dll" ren "%root%\WizBot\src\WizBot\libsodium.dll" "libsodium_%date:/=-%_%time::=-%.dll_backup"
+COPY "%root%\WizBot\WizBot.Core\_libs\32\libsodium.dll" "%root%\WizBot\src\WizBot\libsodium.dll"
+ECHO libsodium.dll file copied.
 ECHO.
 timeout /t 5
-IF EXIST "%root%WizBot\src\WizBot\_libs\32\opus.dll" (GOTO copyopus) ELSE (GOTO downloadopus)
+IF EXIST "%root%\WizBot\WizBot.Core\_libs\32\opus.dll" (GOTO copyopus) ELSE (GOTO downloadopus)
 :downloadsodium
 SET "FILENAME=%~dp0\WizBot\src\WizBot\libsodium.dll"
-powershell -Command "Invoke-WebRequest https://github.com/Wizkiller96/WizBot/raw/dev/src/WizBot/_libs/32/libsodium.dll -OutFile '%FILENAME%'"
+powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/Wizkiller96/WizBot/1.9/WizBot.Core/_libs/32/libsodium.dll -OutFile '%FILENAME%'"
 ECHO libsodium.dll downloaded.
 ECHO.
 timeout /t 5
-IF EXIST "%root%WizBot\src\WizBot\_libs\32\opus.dll" (GOTO copyopus) ELSE (GOTO downloadopus)
+IF EXIST "%root%\WizBot\WizBot.Core\_libs\32\opus.dll" (GOTO copyopus) ELSE (GOTO downloadopus)
 :copyopus
-del "%root%WizBot\src\WizBot\opus.dll"
-copy "%root%WizBot\src\WizBot\_libs\32\opus.dll" "%root%WizBot\src\WizBot\opus.dll"
-ECHO opus.dll copied.
+del "%root%\WizBot\src\WizBot\opus.dll"
+IF EXIST "%root%\WizBot\src\WizBot\opus.dll" ren "%root%\WizBot\src\WizBot\opus.dll" "opus_%date:/=-%_%time::=-%.dll_backup"
+COPY "%root%\WizBot\WizBot.Core\_libs\32\opus.dll" "%root%\WizBot\src\WizBot\opus.dll"
+ECHO opus.dll file copied.
 GOTO end
 :downloadopus
 SET "FILENAME=%~dp0\WizBot\src\WizBot\opus.dll"
-powershell -Command "Invoke-WebRequest https://github.com/Wizkiller96/WizBot/raw/dev/src/WizBot/_libs/32/opus.dll -OutFile '%FILENAME%'"
+powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/Wizkiller96/WizBot/1.9/WizBot.Core/_libs/32/opus.dll -OutFile '%FILENAME%'"
 ECHO opus.dll downloaded.
 GOTO end
 :end
